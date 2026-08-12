@@ -33,22 +33,9 @@ Install from PyPI:
 ```bash
 pip install cfsolver-python
 ```
-
-Install editable/source (dev):
-
 ```bash
-python -m pip install -e .
+uv add cfsolver-python
 ```
-
-Build & install via `uv` build (if you use the `uv` build backend):
-
-```bash
-# Build a wheel
-uv build
-# Then install the built wheel
-pip install dist/*.whl
-```
-
 
 ---
 
