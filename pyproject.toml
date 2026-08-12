@@ -1,0 +1,33 @@
+[project]
+name = "cfsolver"
+version = "0.1.0"
+description = "Cloudflare solver and web automation utilities using Patchright and Pydoll"
+readme = "README.md"
+authors = [
+    { name = "dx-bear"}
+]
+requires-python = ">=3.10" 
+dependencies = [
+    "patchright>=1.61.2",
+    "pydoll-python>=2.23.1",
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: WWW/HTTP :: Browsers",
+]
+
+[project.urls]
+Homepage = "https://github.com/dx-bear/cfsolver"
+Repository = "https://github.com/dx-bear/cfsolver"
+Issues = "https://github.com/dx-bear/cfsolver/issues"
+
+[build-system]
+requires = ["uv_build>=0.12.2,<0.13.0"]
+build-backend = "uv_build"
