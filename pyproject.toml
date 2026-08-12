@@ -1,6 +1,6 @@
 [project]
 name = "cfsolver-python"
-version = "0.1.1"
+version = "0.1.2"
 description = "Cloudflare solver and web automation utilities using Patchright and Pydoll"
 readme = "README.md"
 authors = [
