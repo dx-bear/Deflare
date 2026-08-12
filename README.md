@@ -96,12 +96,12 @@ Returned coordinate dictionary includes keys such as `found`, `x`, `y`, `width`,
 
 ## Examples
 
-See the example scripts in `src/cfsolver/examples/` for ready-to-run demos (Patchright and Pydoll).
+See the example scripts in `src/cfsolver_python/examples/` for ready-to-run demos (Patchright and Pydoll).
 
 Run an example:
 
 ```bash
-python src/cfsolver/examples/patchright_turnstile_demo.py
+python src/cfsolver_python/examples/patchright_turnstile_demo.py
 ```
 
 ## Notes
