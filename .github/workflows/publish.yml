@@ -3,7 +3,9 @@ name: Publish cfsolver to PyPI
 on:
   push:
     tags:
-      - 'v*' # Triggers on tags like v0.1.0
+      - 'v*'
+  workflow_dispatch: # This adds the manual "Run workflow" button!
+
 
 jobs:
   build-and-publish:
