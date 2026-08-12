@@ -1,66 +1,78 @@
-# CfSolver
+# 🚀 CfSolver
 
 Cloudflare Turnstile detection and bypass utilities for Python web automation.
 
-`cfsolver` provides a small helper package for locating Cloudflare Turnstile challenges and computing checkbox coordinates using either `patchright` or `pydoll` automation backends.
+Small, focused helper utilities to locate Cloudflare Turnstile iframes (including
+inside closed/open shadow roots) and compute checkbox coordinates using either
+Patchright (Playwright-style) or Pydoll (CDP-native) backends.
 
-## Features
+---
 
-- Detect Cloudflare Turnstile challenges on a page
-- Resolve Turnstile iframe coordinates through open shadow roots, closed shadow roots, and CDP DOM inspection
-- Click the checkbox automatically using Patchright or Pydoll
-- Support for both Playwright-style `patchright` and CDP-native `pydoll`
+| | |
+|---:|:---|
+| PyPI | `pip install cfsolver-python` |
 
-## Requirements
+## ✨ Highlights
+
+- ✅ Detect Cloudflare Turnstile challenges automatically
+- 🧭 Resolve iframe coordinates across open/closed shadow roots via CDP
+- 🖱️ Click the checkbox using `page.mouse.click` (Patchright) or Pydoll executor
+- 🔁 Retry logic and simple public API (`expectAndBypass`, `is_challenge_present`)
+
+## 📦 Requirements
 
 - Python 3.10+
-- `patchright>=1.61.2`
-- `pydoll-python>=2.23.1`
-- A Chromium browser binary installed and reachable from your system
+- patchright>=1.61.2 (for Patchright backend)
+- pydoll-python>=2.23.1 (for Pydoll backend)
+- A Chromium browser binary available on your PATH (or point to its location)
 
-## Installation
+## ⚙️ Installation
+
+Install from PyPI:
+
+```bash
+pip install cfsolver-python
+```
+
+Install editable/source (dev):
 
 ```bash
 python -m pip install -e .
 ```
 
-Or install package dependencies manually:
+Build & install via `uv` build (if you use the `uv` build backend):
 
 ```bash
-python -m pip install patchright>=1.61.2 pydoll-python>=2.23.1
+# Build a wheel
+uv build
+# Then install the built wheel
+pip install dist/*.whl
 ```
+
+
+---
 
 ## Quick Start
 
-Import the exported solver class from the package root:
+Import the high-level API and call the convenience method:
 
 ```python
 from cfsolver import CfSolver
-```
 
-### Patchright Example
-
-```python
+# Example (Patchright):
 import asyncio
 from patchright.async_api import async_playwright
-from cfsolver import CfSolver
 
-async def main():
+async def demo_patchright():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            executable_path="/usr/bin/chromium",
-            headless=False,
-        )
+        browser = await p.chromium.launch(headless=False)
         page = await browser.new_page()
-        await page.goto("https://2captcha.com/demo/cloudflare-turnstile")
+        await page.goto("https://nopecha.com/demo/turnstile")
 
-        success = await CfSolver.expectAndBypass(page, backend="patchright")
+        success = await CfSolver.expectAndBypass(page, backend="patchright", max_attempts=6)
         print("Bypass successful" if success else "Bypass failed")
 
-        await browser.close()
-
-if __name__ == "__main__":
-    asyncio.run(main())
+asyncio.run(demo_patchright())
 ```
 
 ### Pydoll Example
@@ -71,70 +83,35 @@ from pydoll.browser.chromium import Chrome
 from pydoll.browser.options import ChromiumOptions
 from cfsolver import CfSolver
 
-async def main():
+async def demo_pydoll():
     options = ChromiumOptions()
     options.binary_location = "/usr/bin/chromium"
 
     async with Chrome(options=options) as browser:
         tab = await browser.start()
-        await tab.go_to("https://2captcha.com/demo/cloudflare-turnstile")
+        await tab.go_to("https://nopecha.com/demo/turnstile")
 
         success = await CfSolver.expectAndBypass(page=tab, backend="pydoll")
         print("Bypass successful" if success else "Bypass failed")
 
-        await asyncio.sleep(5)
-
-if __name__ == "__main__":
-    asyncio.run(main())
+asyncio.run(demo_pydoll())
 ```
 
-## API
+---
 
-### `CfSolver.expectAndBypass(page, backend="patchright", wait_seconds=5, max_attempts=10)`
+## API Overview
 
-Automatically detects a Cloudflare Turnstile challenge on the given page and attempts to click the checkbox until the page is bypassed or the attempt limit is reached.
+- `CfSolver.expectAndBypass(page, backend="patchright", wait_seconds=5, max_attempts=10)` — Detects and attempts to bypass a Turnstile challenge; returns `True` on success.
+- `CfSolver.is_challenge_present(page, backend="patchright")` — Quick check whether a Turnstile challenge exists.
+- `CfSolver.get_coords_if_challenge(page, backend="patchright")` — Returns coords dictionary or `None`.
 
-Parameters:
+Returned coordinate dictionary includes keys such as `found`, `x`, `y`, `width`, `height`, `checkbox_x`, `checkbox_y`, and `src`.
 
-- `page`: a Patchright or Pydoll page/tab object
-- `backend`: `"patchright"` or `"pydoll"`
-- `wait_seconds`: seconds to wait after each click
-- `max_attempts`: maximum number of bypass attempts
+## Examples
 
-Returns:
+See the example scripts in `src/cfsolver/examples/` for ready-to-run demos (Patchright and Pydoll).
 
-- `True` if bypass succeeded
-- `False` otherwise
-
-### `CfSolver.is_challenge_present(page, backend="patchright")`
-
-Returns `True` if a Cloudflare Turnstile challenge is present on the page.
-
-### `CfSolver.get_coords_if_challenge(page, backend="patchright")`
-
-Returns a coordinate dictionary if a challenge is present, otherwise returns `None`.
-
-Returned dictionary keys:
-
-- `found`
-- `x`, `y`
-- `width`, `height`
-- `checkbox_x`, `checkbox_y`
-- `src`
-
-## Example scripts
-
-The repository includes ready-to-run examples in `src/cfsolver/examples/`:
-
-- `get_cord_demo.py` — detect a challenge and print/click checkbox coordinates
-- `patchright_turnstile_demo.py` — Patchright demo for a Turnstile challenge page
-- `patchright_ahrefs_humanizer.py` — Patchright example that enters text on Ahrefs and bypasses Turnstile
-- `patchright_zoominfo_ex.py` — Patchright example for ZoomInfo page automation
-- `pydoll_turnstile_demo.py` — Pydoll demo for a Turnstile challenge page
-- `pydoll_ahrefs_humanizer.py` — Pydoll example that enters text and bypasses Turnstile
-- `pydoll_zoominfo_ex.py` — Pydoll example for ZoomInfo page automation
-
-Run an example with:
+Run an example:
 
 ```bash
 python src/cfsolver/examples/patchright_turnstile_demo.py
@@ -142,9 +119,8 @@ python src/cfsolver/examples/patchright_turnstile_demo.py
 
 ## Notes
 
-- `CfSolver` uses CDP-based DOM inspection to locate Turnstile iframes inside shadow roots.
-- The example scripts assume Chromium is available at `/usr/bin/chromium`. Adjust `executable_path` or `binary_location` if needed.
-- This package is designed for automation and experimentation only.
+- The solver uses CDP to pierce closed shadow roots when necessary. If you rely on Patchright, ensure the chosen browser/context supports CDP sessions.
+- Adjust the Chromium binary location in examples if your system uses a different path.
 
 ## License
 
