@@ -1,7 +1,7 @@
 import asyncio
 import time
 from patchright.async_api import async_playwright
-from cfsolver import CfSolver
+from cfsolver_python import CfSolver
 
 async def main():
     async with async_playwright() as p:

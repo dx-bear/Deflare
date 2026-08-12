@@ -1,5 +1,5 @@
 
-from cfsolver.solver import CfSolver
+from cfsolver_python.solver import CfSolver
 import asyncio
 from patchright.async_api import async_playwright
 

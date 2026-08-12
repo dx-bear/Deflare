@@ -1,4 +1,4 @@
-from cfsolver.solver import CfSolver  
+from cfsolver_python.solver import CfSolver  
 import asyncio  
 from pydoll.browser.chromium import Chrome  
 from pydoll.browser.options import ChromiumOptions  
