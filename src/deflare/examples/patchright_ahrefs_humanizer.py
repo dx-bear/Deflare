@@ -1,5 +1,5 @@
 
-from cfsolver_python.solver import CfSolver
+from deflare import Solver
 import asyncio
 from patchright.async_api import async_playwright
 
@@ -38,7 +38,7 @@ async def main():
         await submit_button.click()
 
         await page.wait_for_timeout(9000)
-        await CfSolver.expectAndBypass(page=page)
+        await Solver.expectAndBypass(page=page)
         await page.wait_for_timeout(5000)
 
 

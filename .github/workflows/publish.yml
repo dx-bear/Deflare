@@ -1,4 +1,4 @@
-name: Publish cfsolver to PyPI
+name: Publish deflare to PyPI
 
 on:
   push:
@@ -6,16 +6,15 @@ on:
       - 'v*'
   workflow_dispatch: # This adds the manual "Run workflow" button!
 
-
 jobs:
   build-and-publish:
     name: Build and publish to PyPI
     runs-on: ubuntu-latest
-    
+
     environment:
       name: pypi
-      url: https://pypi.org/p/cfsolver
-      
+      url: https://pypi.org/p/deflare
+
     permissions:
       id-token: write  # Mandatory for PyPI Trusted Publishing
       contents: read

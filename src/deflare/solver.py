@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 """
-CfSolver - Cloudflare Turnstile Bypass Module
-=============================================
+Solver - Cloudflare Turnstile Bypass Module
+===========================================
 
 This module provides a robust, production-ready utility for detecting and
 bypassing Cloudflare Turnstile challenges using Patchright (a stealth-oriented
 fork of Playwright) or Pydoll (a native CDP-based browser automation library).
 
-It exposes the ``CfSolver`` class, which encapsulates all the logic required
+It exposes the ``Solver`` class, which encapsulates all the logic required
 for locating the Turnstile iframe—even when buried inside closed or open
 shadow roots—and computing the on-screen coordinates of its verification
 checkbox.
@@ -16,16 +16,16 @@ checkbox.
 High-level usage:
     >>> import asyncio
     >>> from patchright.async_api import async_playwright
-    >>> from cfsolver import CfSolver
+    >>> from deflare import Solver
     >>>
     >>> async def main():
     ...     async with async_playwright() as p:
     ...         browser = await p.chromium.launch(headless=False)
     ...         page = await browser.new_page()
     ...         await page.goto("https://nopecha.com/demo/turnstile")
-    ... 
+    ...
     ...         # Automatic detection and bypass (specify backend)
-    ...         success = await CfSolver.expectAndBypass(page, backend="patchright", max_attempts=10)
+    ...         success = await Solver.expectAndBypass(page, backend="patchright", max_attempts=10)
     ...         print("Bypass successful!" if success else "Bypass failed.")
     ...
     >>> asyncio.run(main())
@@ -61,7 +61,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-class CfSolver:
+class Solver:
     """
     Detect and bypass Cloudflare Turnstile challenges on a Playwright ``Page``.
 
@@ -97,7 +97,7 @@ class CfSolver:
 
     def __init__(self, page: Page, max_retries: int = -1, log: bool = True, backend: str = "patchright"):
         """
-        Initialize the CfSolver.
+        Initialize the Solver.
 
         Parameters
         ----------
@@ -689,7 +689,7 @@ class CfSolver:
 
         This is a thin convenience wrapper around the instance method
         ``is_cloudflare_challenge_present``. It creates a short-lived
-        ``CfSolver`` instance with logging disabled and ``max_retries=0``
+        ``Solver`` instance with logging disabled and ``max_retries=0``
         (the retry setting is irrelevant for a single-shot check) and
         delegates to it.
 
@@ -764,3 +764,7 @@ class CfSolver:
             return None
 
         return await checker.get_turnstile_coordinates()
+
+
+# Backwards-compatible alias for the previous public class name.
+CfSolver = Solver

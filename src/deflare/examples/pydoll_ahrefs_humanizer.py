@@ -1,4 +1,4 @@
-from cfsolver_python.solver import CfSolver  
+from deflare import Solver  
 import asyncio  
 from pydoll.browser.chromium import Chrome  
 from pydoll.browser.options import ChromiumOptions  
@@ -32,8 +32,8 @@ async def main():
   
         await asyncio.sleep(9)  
   
-        # Keeping your exact CfSolver code  
-        await CfSolver.expectAndBypass(page=page, backend="pydoll")  
+        # Keeping the same Solver flow  
+        await Solver.expectAndBypass(page=page, backend="pydoll")  
   
         await asyncio.sleep(5)  
   

@@ -1,4 +1,4 @@
-# 🚀 CfSolver
+# 🚀 Deflare
 
 Cloudflare Turnstile detection and bypass utilities for Python web automation.
 
@@ -10,7 +10,7 @@ Patchright (Playwright-style) or Pydoll (CDP-native) backends.
 
 | | |
 |---:|:---|
-| PyPI | `pip install cfsolver-python` |
+| PyPI | `pip install deflare` |
 
 ## ✨ Highlights
 
@@ -31,10 +31,10 @@ Patchright (Playwright-style) or Pydoll (CDP-native) backends.
 Install from PyPI:
 
 ```bash
-pip install cfsolver-python
+pip install deflare
 ```
 ```bash
-uv add cfsolver-python
+uv add deflare
 ```
 
 ---
@@ -44,7 +44,7 @@ uv add cfsolver-python
 Import the high-level API and call the convenience method:
 
 ```python
-from cfsolver import CfSolver
+from deflare import Solver
 
 # Example (Patchright):
 import asyncio
@@ -56,7 +56,7 @@ async def demo_patchright():
         page = await browser.new_page()
         await page.goto("https://nopecha.com/demo/turnstile")
 
-        success = await CfSolver.expectAndBypass(page, backend="patchright", max_attempts=6)
+        success = await Solver.expectAndBypass(page, backend="patchright", max_attempts=6)
         print("Bypass successful" if success else "Bypass failed")
 
 asyncio.run(demo_patchright())
@@ -68,7 +68,7 @@ asyncio.run(demo_patchright())
 import asyncio
 from pydoll.browser.chromium import Chrome
 from pydoll.browser.options import ChromiumOptions
-from cfsolver import CfSolver
+from deflare import Solver
 
 async def demo_pydoll():
     options = ChromiumOptions()
@@ -78,7 +78,7 @@ async def demo_pydoll():
         tab = await browser.start()
         await tab.go_to("https://nopecha.com/demo/turnstile")
 
-        success = await CfSolver.expectAndBypass(page=tab, backend="pydoll")
+        success = await Solver.expectAndBypass(page=tab, backend="pydoll")
         print("Bypass successful" if success else "Bypass failed")
 
 asyncio.run(demo_pydoll())
@@ -88,20 +88,20 @@ asyncio.run(demo_pydoll())
 
 ## API Overview
 
-- `CfSolver.expectAndBypass(page, backend="patchright", wait_seconds=5, max_attempts=10)` — Detects and attempts to bypass a Turnstile challenge; returns `True` on success.
-- `CfSolver.is_challenge_present(page, backend="patchright")` — Quick check whether a Turnstile challenge exists.
-- `CfSolver.get_coords_if_challenge(page, backend="patchright")` — Returns coords dictionary or `None`.
+- `Solver.expectAndBypass(page, backend="patchright", wait_seconds=5, max_attempts=10)` — Detects and attempts to bypass a Turnstile challenge; returns `True` on success.
+- `Solver.is_challenge_present(page, backend="patchright")` — Quick check whether a Turnstile challenge exists.
+- `Solver.get_coords_if_challenge(page, backend="patchright")` — Returns coords dictionary or `None`.
 
 Returned coordinate dictionary includes keys such as `found`, `x`, `y`, `width`, `height`, `checkbox_x`, `checkbox_y`, and `src`.
 
 ## Examples
 
-See the example scripts in `src/cfsolver_python/examples/` for ready-to-run demos (Patchright and Pydoll).
+See the example scripts in `src/deflare/examples/` for ready-to-run demos (Patchright and Pydoll).
 
 Run an example:
 
 ```bash
-python src/cfsolver_python/examples/patchright_turnstile_demo.py
+python src/deflare/examples/patchright_turnstile_demo.py
 ```
 
 ## Notes

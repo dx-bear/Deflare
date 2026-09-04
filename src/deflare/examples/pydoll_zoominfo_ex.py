@@ -2,7 +2,7 @@ import asyncio
   
 from pydoll.browser.chromium import Chrome  
 from pydoll.browser.options import ChromiumOptions  
-from cfsolver_python.solver import CfSolver
+from deflare import Solver
 
   
 async def main():  
@@ -14,7 +14,7 @@ async def main():
   
         await tab.go_to("https://www.zoominfo.com/c/anthropic/546195556")  
         await asyncio.sleep(10)  
-        await CfSolver.expectAndBypass(page=tab, backend="pydoll")
+        await Solver.expectAndBypass(page=tab, backend="pydoll")
         await asyncio.sleep(10)  
 
   

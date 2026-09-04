@@ -1,7 +1,7 @@
 import asyncio
 
 from patchright.async_api import async_playwright
-from cfsolver_python.solver import CfSolver
+from deflare import Solver
 
 
 async def main():
@@ -16,7 +16,7 @@ async def main():
         await page.goto("https://2captcha.com/demo/cloudflare-turnstile")
         await page.wait_for_timeout(10_000)
 
-        await CfSolver.expectAndBypass(page=page)
+        await Solver.expectAndBypass(page=page)
 
         await browser.close()
 
