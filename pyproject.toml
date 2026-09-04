@@ -1,6 +1,6 @@
 [project]
-name = "cfsolver-python"
-version = "0.1.2"
+name = "deflare"
+version = "1.0"
 description = "Cloudflare solver and web automation utilities using Patchright and Pydoll"
 readme = "README.md"
 authors = [
@@ -24,9 +24,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/dx-bear/cfsolver"
-Repository = "https://github.com/dx-bear/cfsolver"
-Issues = "https://github.com/dx-bear/cfsolver/issues"
+Homepage = "https://github.com/dx-bear/deflare"
+Repository = "https://github.com/dx-bear/deflare"
+Issues = "https://github.com/dx-bear/deflare/issues"
 
 [build-system]
 requires = ["uv_build>=0.12.2,<0.13.0"]
