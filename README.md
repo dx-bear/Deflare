@@ -8,6 +8,12 @@ Patchright (Playwright-style) or Pydoll (CDP-native) backends.
 
 ---
 
+
+
+https://github.com/user-attachments/assets/0b6b74c5-b0c0-405b-a0d1-57744c39f9e2
+
+
+
 | | |
 |---:|:---|
 | PyPI | `pip install deflare` |
