@@ -6,6 +6,7 @@ Small, focused helper utilities to locate Cloudflare Turnstile iframes (includin
 inside closed/open shadow roots) and compute checkbox coordinates using either
 Patchright (Playwright-style) or Pydoll (CDP-native) backends.
 
+[Full Tutorial Here](https://scravity.com/blog/cloudflare-captcha-solver-how-to-bypass-cloudflare-challenges-with-python/)
 ---
 
 
